@@ -1,8 +1,4 @@
 const http = require("http");
-const express = require("express");
-const bodyparser = require("body-parser");
-const jsonwebtoken = require("jsonwebtoken");
-
 const app = require('./app');
 
 const normalizePort = val => {
@@ -16,7 +12,7 @@ const normalizePort = val => {
     }
     return false;
 };
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT ||'3000');
 app.set('port', port);
 
 const errorHandler = error => {
