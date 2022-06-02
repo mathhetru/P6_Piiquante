@@ -1,9 +1,11 @@
 const express = require('express');
 /* installation d'express (framework qui simplifie les taches, en nous permettant de déployer les API plus rapidement) 
 l'application Express est fondamentalement une série de fonctions appelées MIDDLEWARE. Chaque élément de middleware reçoit les objets request et response , peut les lire, les analyser et les manipuler, le cas échéant. (COMME CI DESSOUS) */
-const bodyParser = require('body-parser');
-const app = express(); 
 const mongoose = require('mongoose');
+const app = express();
+
+app.use(express.json())
+
 const userRoutes = require('./routes/user');
 
 mongoose.connect('mongodb+srv://user01:user@piiquante.ttqu5xy.mongodb.net/?retryWrites=true&w=majority',
@@ -21,7 +23,6 @@ app.use((req, res, next) => {
 /*middleware qui autorise toutes les origines, ajoute des headers aux requêtes envoyées vers l'API et d'envoyer des requêtes GET POST PUT Etc... sinon erreur de CORS !!! 
 CORS signifie « Cross Origin Resource Sharing ». Il s'agit d'un système de sécurité qui, par défaut, bloque les appels HTTP entre des serveurs différents, ce qui empêche donc les requêtes malveillantes d'accéder à des ressources sensibles. Par défaut, les requêtes AJAX sont interdites.*/
 
-app.use(bodyParser.json());
 app.use('/api/auth', userRoutes);
 
 module.exports = app;
