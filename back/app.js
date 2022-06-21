@@ -4,10 +4,14 @@ l'application Express est fondamentalement une série de fonctions appelées MID
 const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
+const cors = require('cors');
+
+app.use(cors());
 
 app.use(express.json());
 
 const userRoutes = require("./routes/user");
+const saucesRoutes = require("./routes/sauces");
 
 mongoose
   .connect(
@@ -17,7 +21,7 @@ mongoose
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -35,5 +39,6 @@ CORS signifie « Cross Origin Resource Sharing ». Il s'agit d'un système de s�
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/api/auth", userRoutes);
+app.use("/api", saucesRoutes);
 
 module.exports = app;
