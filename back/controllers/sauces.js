@@ -73,5 +73,39 @@ exports.deleteSauce = (req, res, next) => {
 };
 
 exports.likedSauce = (req, res, next) => {
-  
+  if (req.body.like == 1 ) {
+    Sauce.updateOne(
+      { _id: req.params.id }, 
+      { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId }}
+    )
+    .then(() => res.status(200).json({ message: 'Vous avez liké la sauce ! :)' }))
+    .catch((error) => res.status(400).json({ error }));
+  } else if (req.body.like == -1 ) {
+    Sauce.updateOne(
+      { _id: req.params.id }, 
+      { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId }}
+    )
+    .then(() => res.status(200).json({ message: 'Vous avez disliké la sauce ! :(' }))
+    .catch((error) => res.status(400).json({ error }));
+  } else {
+    Sauce.findOne({ _id: req.params.id })
+    .then((sauce) => {
+      if (sauce.usersLiked.includes(req.body.userId)){ //si l'userId est présent dans les usersLiked alors
+          Sauce.updateOne( //on modifie celui dont l'ID est égal à l'ID envoyé dans les paramètres de requêtes en mettant un like a -1 et en enlevant userId des usersLiked
+          { _id: req.params.id }, 
+          { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId }}
+      )
+      .then(() => res.status(200).json({ message: 'Vous avez disliké la sauce ! :(' }))
+      .catch((error) => res.status(400).json({ error }));
+      } 
+      else if (sauce.usersDisliked.includes(req.body.userId)){ //si l'userId est présent dans les usersDisliked alors
+        Sauce.updateOne( //on modifie celui dont l'ID est égal à l'ID envoyé dans les paramètres de requêtes en mettant un dislike a -1 et en enlevant userId des usersDisliked
+        { _id: req.params.id }, 
+        { $inc: { dislikes: -1 }, $pull: { usersDisliked: req.body.userId }} //L'opérateur $inc incrémente un champ d'une valeur spécifiée
+    )
+    .then(() => res.status(200).json({ message: 'Vous avez disliké la sauce ! :(' }))
+    .catch((error) => res.status(400).json({ error }));
+    }
+    })
+  }
 };
