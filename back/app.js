@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
 const cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
 
 app.use(cors());
 
@@ -13,9 +15,13 @@ app.use(express.json());
 const userRoutes = require("./routes/user");
 const saucesRoutes = require("./routes/sauces");
 
+const myAccount = process.env.account;
+const myMdp = process.env.mdp;
+const myDatabase = process.env.database;
+
 mongoose
   .connect(
-    "mongodb+srv://user01:user@piiquante.ttqu5xy.mongodb.net/?retryWrites=true&w=majority",
+    `mongodb+srv://${myAccount}:${myMdp}@${myDatabase}.mongodb.net/?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
