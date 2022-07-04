@@ -1,0 +1,27 @@
+🎯Implémenter un modèle logique de données conformément à la réglementation
+
+L'API est complète lorsque :
+❒ Le backend de l'application ne tombe pas en panne lors de son exécution.
+❒ Il n'y a pas d'erreurs dans la console lors de l'exécution de l'application.
+❒ L'application utilise toutes les routes énumérées dans le document « spécifications ».
+❒ Le projet utilise le framework Express Node.js.
+❒ Le projet est articulé autour d’un serveur Node.js.
+❒ Le projet utilise une base de données MongoDB (sur MongoDB Atlas ou un service similaire).
+
+
+🎯 Stocker des données de manière sécurisée
+
+L'API est sécurisée lorsque :
+❒ Les mots de passe utilisateurs sont stockés dans la base de données en utilisant un hachage des données.
+❒ L'application oblige strictement à une authentification sur toutes les routes requises.
+❒ L'application utilise un plugin Mongoose (unique validator) approprié pour garantir que les adresses électroniques stockées dans la base de données sont uniques.
+❒ La configuration de la sécurité dans la base de données MongoDB permet à l'évaluateur d'exécuter avec succès l'application sur sa propre machine.
+❒ L'application utilise un plugin Mongoose approprié pour s'assurer que toute erreur dans la base de données est signalée.
+❒ L'utilisateur ajoute le contenu du dossier images à gitignore, afin que les images ne soient pas téléchargées sur GitHub.
+
+🎯 Mettre en œuvre des opérations CRUD de manière sécurisée
+
+L'API est complète lorsque :
+❒ L'application effectue des opérations de création, de lecture, de mise à jour et de suppression telles que définies dans les spécifications de l'API.
+
+https://ichi.pro/fr/gerez-les-variables-d-environnement-dans-votre-application-nodejs-avec-dotenv-90198954812747
