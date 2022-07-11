@@ -12,6 +12,7 @@ const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         if (!fs.existsSync('images')) {
             fs.mkdirSync('images');
+            callback(null, 'images');
         } else {
         callback(null, 'images');
         }

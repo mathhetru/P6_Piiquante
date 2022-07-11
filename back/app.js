@@ -27,7 +27,8 @@ mongoose
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-/*app.use((req, res, next) => {
+/*
+app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -39,7 +40,7 @@ mongoose
   );
   next();
 });
-/*middleware qui autorise toutes les origines, ajoute des headers aux requêtes envoyées vers l'API et d'envoyer des requêtes GET POST PUT Etc... sinon erreur de CORS !!! 
+/* middleware qui autorise toutes les origines, ajoute des headers aux requêtes envoyées vers l'API et d'envoyer des requêtes GET POST PUT Etc... sinon erreur de CORS !!! 
 CORS signifie « Cross Origin Resource Sharing ». Il s'agit d'un système de sécurité qui, par défaut, bloque les appels HTTP entre des serveurs différents, ce qui empêche donc les requêtes malveillantes d'accéder à des ressources sensibles. Par défaut, les requêtes AJAX sont interdites.*/
 
 app.use("/images", express.static(path.join(__dirname, "images")));

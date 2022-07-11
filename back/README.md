@@ -1,13 +1,12 @@
 # P6 PIIQUANTE #
-
 This is the front end and back end server for Project 6 of the Web Developer path.
 
 ### Back end Prerequisites ###
-
 You will need to have Node and `npm` installed locally on your machine.
 
-### Back end Installation ###
+Please create .env in the "back" folder with your account name in `account="xxx"`, your password in `mdp="xxx"` and your name database in `database="xxx"`. Check "app.js" if you need more informations. 
 
+### Back end Installation ###
 Clone this repo. 
 From the "back" folder of the project, run `npm install`. You can then run the server with `node server` or `nodemon server`. 
 Then "install dependencies" from package.json
