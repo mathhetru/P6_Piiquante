@@ -1,5 +1,5 @@
-const http = require("http");
-const app = require('./app');
+const http = require("http"); /* programme qui attend les requettes http et qui y répond */ 
+const app = require('./app'); /* import du fichier app.js */ 
 
 const normalizePort = val => {
     const port = parseInt(val, 10);
@@ -11,9 +11,9 @@ const normalizePort = val => {
         return port;
     }
     return false;
-};
+}; /* function qui renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne */
 const port = normalizePort(process.env.PORT ||'3000');
-app.set('port', port);
+app.set('port', port); /* configuration pour dire à l'application express sur quel port elle doit tourner */
 
 const errorHandler = error => {
     if (error.syscall !== 'listen') {
@@ -33,9 +33,9 @@ const errorHandler = error => {
         default:
             throw error;
     }
-};
+}; /* function qui recherche les différentes erreurs et les gère de manière appropriée. Elle est ensuite enregistrée dans le serveur ;*/
 
-const server = http.createServer(app);
+const server = http.createServer(app); /* Création du server a partir du fichier app.js*/
 
 server.on('error', errorHandler);
 server.on('listening', () => {
@@ -44,5 +44,6 @@ server.on('listening', () => {
     console.log('Listening on ' + bind);
 });
 
-server.listen(port);
+
+server.listen(port); /* le serveur écoute le port */ 
 
