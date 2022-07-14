@@ -71,9 +71,9 @@ exports.modifySauce = (req, res, next) => {
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id }) /* on recherche dans la bdd la sauce avec son id */
     .then((sauce) => {
-      const filename = sauce.imageUrl.split("/images/")[1];
-      fs.unlink(`images/${filename}`, () => {
-        Sauce.deleteOne({ _id: req.params.id })
+      const filename = sauce.imageUrl.split("/images/")[1]; /* on split l'url de l'image en 2 et on retient la seconde partie */
+      fs.unlink(`images/${filename}`, () => { /* on supprime l'image */
+        Sauce.deleteOne({ _id: req.params.id }) /* on supprime la sauce ayant l'id recupéré dans la bdd */
           .then(() => res.status(200).json({ message: "Sauce supprimée !" }))
           .catch((error) => res.status(400).json({ error }));
       });
@@ -82,35 +82,34 @@ exports.deleteSauce = (req, res, next) => {
 };
 
 exports.likedSauce = (req, res, next) => {
-  if (req.body.like == 1 ) {
-    Sauce.updateOne(
-      { _id: req.params.id }, 
-      { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId }}
+  if (req.body.like == 1 ) { /* si l'utilisateur like une sauce */
+    Sauce.updateOne( /* on met a jour la sauce de la page */
+      { _id: req.params.id }, /* on récupère l'id dans la bdd */
+      { $inc: { likes: 1 }, $push: { usersLiked: req.body.userId }} /* (l'opérateur $inc incrémente un champ d'une valeur spécifiée) on lui ajoute 1 like et on push l'id de l'utilisateur qui a liké dans la sauce */
     )
     .then(() => res.status(200).json({ message: 'Vous avez liké la sauce ! :)' }))
     .catch((error) => res.status(400).json({ error }));
-  } else if (req.body.like == -1 ) {
-    Sauce.updateOne(
-      { _id: req.params.id }, 
-      { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId }}
+  } else if (req.body.like == -1 ) { /* sinon si l'utilisateur dislike une sauce */
+    Sauce.updateOne( /* on met à jour la sauce de la page */
+      { _id: req.params.id },  /* on récupère l'id dans la bdd */
+      { $inc: { dislikes: 1 }, $push: { usersDisliked: req.body.userId }} /* on lui ajoute 1 dislike et on push l'id de l'utilisateur qui a liké dans la sauce */
     )
     .then(() => res.status(200).json({ message: 'Vous avez disliké la sauce ! :(' }))
     .catch((error) => res.status(400).json({ error }));
-  } else {
-    Sauce.findOne({ _id: req.params.id })
+  } else { /* sinon */
+    Sauce.findOne({ _id: req.params.id }) /* on recherche la sauce grâce à son id dans la bdd */
     .then((sauce) => {
       if (sauce.usersLiked.includes(req.body.userId)){ /* si l'userId est présent dans les usersLiked alors */
-          Sauce.updateOne( /* on modifie celui dont l'ID est égal à l'ID envoyé dans les paramètres de requêtes en mettant un like a -1 et en enlevant userId des usersLiked */
-          { _id: req.params.id }, 
-          { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId }}
+          Sauce.updateOne( /* on met à jour la sauce */
+          { _id: req.params.id }, /* on récupère l'id de la sauce dans la bdd */
+          { $inc: { likes: -1 }, $pull: { usersLiked: req.body.userId }} /* on retire un like et on retire l'utilisateur des usersLiked */
       )
       .then(() => res.status(200).json({ message: 'Vous avez disliké la sauce ! :(' }))
       .catch((error) => res.status(400).json({ error }));
-      } 
-      else if (sauce.usersDisliked.includes(req.body.userId)){ /* si l'userId est présent dans les usersDisliked alors */
-        Sauce.updateOne( /* on modifie celui dont l'ID est égal à l'ID envoyé dans les paramètres de requêtes en mettant un dislike a -1 et en enlevant userId des usersDisliked */
-        { _id: req.params.id }, 
-        { $inc: { dislikes: -1 }, $pull: { usersDisliked: req.body.userId }} /* l'opérateur $inc incrémente un champ d'une valeur spécifiée */
+      } else if (sauce.usersDisliked.includes(req.body.userId)){ /* sinon si l'userId est présent dans les usersDisliked alors */
+        Sauce.updateOne( /* on met à jour la sauce */ 
+        { _id: req.params.id }, /* on récupère l'id de la sauce dans la bdd */
+        { $inc: { dislikes: -1 }, $pull: { usersDisliked: req.body.userId }} /* on retire un dislike et on retire l'utilisateur des usersLiked */
     )
     .then(() => res.status(200).json({ message: 'Vous avez disliké la sauce ! :(' }))
     .catch((error) => res.status(400).json({ error }));
