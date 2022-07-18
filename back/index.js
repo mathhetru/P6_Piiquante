@@ -1,4 +1,4 @@
-const http = require("http"); /* programme qui attend les requettes http et qui y répond */ 
+const http = require("http"); /* programme qui attend les requetes http et qui y répond */ 
 const app = require('./app'); /* import du fichier app.js */ 
 
 const normalizePort = val => {
