@@ -8,7 +8,7 @@ Please create .env in the "back" folder with your account name in `account="xxx"
 
 ### Back end Installation ###
 Clone this repo. 
-From the "back" folder of the project, run `npm install`. You can then run the server with `node server` or `nodemon server`. 
+From the "back" folder of the project, run `npm install`. You can then run the server with `node index` or `nodemon index`. 
 Then "install dependencies" from package.json
 If you have any trouble, don't hesitate to check and update every package with `npm install -g npm-check-updates`.
 The back server should run on `localhost` with default port `3000`. If the server runs on another port for any reason, 
